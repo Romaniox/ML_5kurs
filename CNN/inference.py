@@ -11,7 +11,7 @@ class ModelType(enum.Enum):
 
 
 def main():
-    imgs_path = os.path.join(os.getcwd(), 'test_data')
+    imgs_path = os.path.join(os.getcwd(), 'test_data2')
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     exp_name = 'exp13_best'
@@ -40,6 +40,9 @@ def main():
         img = cv2.resize(img, (28, 28))
         img = img.astype(np.float32)
         img = img / 255.0
+        if (img == 1).sum() > (img == 0).sum():
+            img = (1 - img)
+
         img = torch.from_numpy(img)
         img = img.unsqueeze(0)
 
